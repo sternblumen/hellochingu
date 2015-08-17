@@ -1,0 +1,7 @@
+body { background-color: #eee; }
+
+.header { background-color: #333; color: #ddd; vertical-align: middle; margin-bottom: 30px; }
+.header h1 { font-size: 18px; }
+
+.card { text-align: center; }
+.card .symbol { width: 50%; background-color: #fff; -webkit-border-radius: 5px; border-radius: 5px; margin: 10px auto; font-size: 150px; text-align: center; }
