@@ -5,6 +5,12 @@ var symbols = ['아','어','오'];
 
 $('.symbol').hide();
 
+
+
+// $.map( symbols, function (value){
+//   annyang.addCommands({ value: function(){} });
+// });
+
 annyang.addCommands({
   '아': function() {
   },
