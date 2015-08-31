@@ -25,7 +25,7 @@ if (annyang) {
 			function(){
 				var nextSymbol = Math.floor((Math.random() * 145) + 1);
 				// redirigir al usuario a un nuevo symbol, palabra o letra.
-				window.location = "https://hellochingu.dev/#/symbol/"+nextSymbol;
+				window.location = "/#/symbol/"+nextSymbol;
 			});
 	});
 
@@ -127,7 +127,7 @@ app.controller('SymbolController',function($routeParams, $location, Symbols){
 
 			var nextSymbol = Math.floor((Math.random() * Symbols.length) + 1);
 			// redirigir al usuario a un nuevo symbol, palabra o letra.
-			window.location = "https://hellochingu.dev/#/symbol/"+nextSymbol;
+			window.location = "/#/symbol/"+nextSymbol;
 
 		});
 	};
