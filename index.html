@@ -12,21 +12,34 @@
 		<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="stylesheets/css/style.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
-    	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js"></script>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
 	</head>
 	<body>
 
+		<nav class="navbar header">
+		  <div class="container-fluid">
+			<div class="navbar-header navbar-left">
+			  <a class="navbar-brand" href="#">¡Hello Chingu!</a>
+			</div>
+			<div class="nav navbar-nav navbar-right">
+				<p class="navbar-text">Puntos: <span id="score">0</span></p>
+			</div>
+		  </div>
+		</nav>
+
 		<div class="container-fluid">
 
-			<div class="row header">
+<!-- 			<div class="row header">
 				<div class="col-md-11">
 					<h1>¡Hello Chingu!</h1>
 				</div>
 				<div class="col-md-1">
 					<h5>Puntos:<span id="score">0</span></h5>
 				</div>
-			</div><!-- row -->
+			</div> -->
+
+
 
 			<div ng-view>
 

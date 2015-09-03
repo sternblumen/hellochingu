@@ -248,8 +248,11 @@ body.stop-scrolling { height: 100%; overflow: hidden; }
   100% { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); transform: rotate(360deg); } }
 body { background-color: #eee; font-family: 'Montserrat', sans-serif; }
 
-.header { background-color: #303f9f; color: white; vertical-align: middle; margin-bottom: 30px; }
-.header h1 { font-size: 18px; }
+.header { background-color: #303f9f; color: white; vertical-align: middle; margin-bottom: 30px; -webkit-border-radius: 0px; border-radius: 0px; }
+.header .navbar-brand { font-size: 18px; color: #c5cae9; }
+.header .navbar-left { float: left; }
+.header .navbar-right { width: 100px; float: right; }
+.header .navbar-nav { margin: 0px -15px; }
 
 .card { text-align: center; }
 .card .symbol { background-color: #3f51b5; -webkit-border-radius: 5px; border-radius: 5px; margin-bottom: 10px; font-size: 200px; color: #c5cae9; text-align: center; }

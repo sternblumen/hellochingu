@@ -25,7 +25,8 @@ if (annyang) {
 			function(){
 				var nextSymbol = Math.floor((Math.random() * 145) + 1);
 				// redirigir al usuario a un nuevo symbol, palabra o letra.
-				window.location = "/#/symbol/"+nextSymbol;
+				// window.location = "/#/symbol/"+nextSymbol;
+				window.location = "/#/vocabulary/"+nextSymbol;
 			});
 	});
 
@@ -62,6 +63,30 @@ app.service('Symbols', function() {
 		'라','러','리','로','루','르','랴','려','료','류','래','레','럐','례','롸','뢔','뢰','뤄','뤠','뤼','릐',
 
 		'마','머','미','모','무','므','먀','며','묘','뮤','매','메','먜','몌','뫄','뫠','뫼','뭐','뭬','뮈','믜',
+	];
+});
+
+app.service('Vocabulary', function() {
+	return [
+		'이','오','아가','아이','오이',
+		'가구','구두','거리','고기',
+
+		'가','거','나라','나이','누나',
+		'다리','도러',
+		'라디오','오리','우리','기러기',
+
+		'나무','머리','머자','어머니','다리미',
+		'바나나','바지','바다','비누','아버지',
+		'사자','시소','서류','버스','가수',
+		'지구','지도','주스','주소','여자',
+		'하나','하마','허리','휴지','호두',
+
+		'새','해','무지개','노래',
+		'게','세수','네모','베개',
+		'얘기','세계시계','차례',
+		'사놔','화가','과자','도와요',
+		'돼지','왜',
+		'뇌',
 
 
 
@@ -82,6 +107,11 @@ app.config(function($routeProvider){
 		templateUrl:'templates/symbols.html'
 	});
 
+	$routeProvider.when('/vocabulary/:symbolId',{
+		controller:'VocabularyController as vocabulary',
+		templateUrl:'templates/vocabulary.html'
+	});
+
 	$routeProvider.otherwise({
 		redirectTo:'/'
 	});
@@ -95,9 +125,14 @@ app.controller('HomeController',function ($location){
 	this.message = 'estas mal';
 	this.mostrar = true;
 
-	this.showRandomSymbol = function() {
+	this.alphabet = function() {
 		//generar un numero random
 		$location.path('/symbol/1');
+	};
+
+	this.vocabulary = function() {
+		//generar un numero random
+		$location.path('/vocabulary/1');
 	};
 
 });
@@ -115,6 +150,7 @@ app.controller('SymbolController',function($routeParams, $location, Symbols){
 	this.showSuccessMessage = function() {
 		console.log('-------- resultMatch --------');
 		annyang.pause();
+
 		// si entro aqui, significa que dijo bien la palabra o letra.
 		// mostrar mensaje de exito.
 		swal({
@@ -139,6 +175,45 @@ app.controller('SymbolController',function($routeParams, $location, Symbols){
 	annyang.resume();
 });
 
+
+
+app.controller('VocabularyController',function($routeParams, $location, Vocabulary){
+	console.log(Vocabulary.length);
+
+	this.showRandomSymbol = function() {
+		annyang.pause();
+		var nextSymbol = Math.floor((Math.random() * Vocabulary.length) + 1);
+		$location.path('/vocabulary/'+ nextSymbol);
+	};
+
+	this.showSuccessMessage = function() {
+		console.log('-------- resultMatch --------');
+		annyang.pause();
+
+		// si entro aqui, significa que dijo bien la palabra o letra.
+		// mostrar mensaje de exito.
+		swal({
+			title: "Fighting!",
+			text: "",
+			type: "success",
+			confirmButtonText: "Siguiente",
+			closeOnConfirm: true
+		}, function(){
+
+			var nextSymbol = Math.floor((Math.random() * Vocabulary.length) + 1);
+			// redirigir al usuario a un nuevo symbol, palabra o letra.
+			window.location = "/#/vocabulary/"+nextSymbol;
+
+		});
+	};
+
+	this.symbol = Vocabulary[$routeParams.symbolId-1];
+	var command = {};
+	command[this.symbol] = this.showSuccessMessage;
+	annyang.addCommands(command);
+	annyang.resume();
+
+});
 
 
 
