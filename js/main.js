@@ -83,12 +83,14 @@ app.service('Vocabulary', function() {
 
 		'새','해','무지개','노래',
 		'게','세수','네모','베개',
-		'얘기','세계시계','차례',
+		'얘기','세계시','차례',
 		'사놔','화가','과자','도와요',
 		'돼지','왜',
-		'뇌',
-
-
+		'뇌','교회','교외',
+		'더워요','주워요',
+		'웨이트','스웨터',
+		'가위','귀','쥐',
+		'의사','의자','회의'
 
 	];
 });
@@ -178,7 +180,7 @@ app.controller('SymbolController',function($routeParams, $location, Symbols){
 
 
 app.controller('VocabularyController',function($routeParams, $location, Vocabulary){
-	console.log(Vocabulary.length);
+	console.log('Palabras por aprender '+Vocabulary.length);
 
 	this.showRandomSymbol = function() {
 		annyang.pause();
