@@ -1,12 +1,14 @@
+window.section = "";
+
 if (annyang) {
 	annyang.setLanguage('ko');
 
-	// annyang.addCallback('resultMatch', function (userSaid, commandText, phrases) {
-	//   console.log('-------- resultMatch --------');
-	//   console.log(userSaid);
-	//   console.log(commandText);
-	//   console.log(phrases);
-	// });
+	annyang.addCallback('resultMatch', function (userSaid, commandText, phrases) {
+	  console.log('-------- resultMatch --------');
+	  console.log(userSaid);
+	  console.log(commandText);
+	  console.log(phrases);
+	});
 
 	annyang.addCallback('resultNoMatch', function (results) {
 		console.log('-------- resultNoMatch --------');
@@ -23,10 +25,11 @@ if (annyang) {
 				closeOnConfirm: true
 			},
 			function(){
-				var nextSymbol = Math.floor((Math.random() * 145) + 1);
+				//tiene que tomar el lenght del service donde está actualmente
+				var nextSymbol = Math.floor((Math.random() * window.length) + 1);
 				// redirigir al usuario a un nuevo symbol, palabra o letra.
-				// window.location = "/#/symbol/"+nextSymbol;
-				window.location = "/#/vocabulary/"+nextSymbol;
+				window.location = "/#/"+window.section+"/"+nextSymbol;
+
 			});
 	});
 
@@ -117,6 +120,25 @@ app.service('Vocabulary', function() {
 	];
 });
 
+app.service('LectureA', function() {
+	return [
+		'','생각','하기보다','기도','하기로','한다',
+		'기도','하기보다','미소','짓기로','한다',
+		'미소','짓기보다','손을','잡아주기로','한다'
+	];
+});
+
+app.service('LectureB', function() {
+	return [
+		'사랑해','사랑했지만',
+		'내가','부족','했어나봐',
+		'혹시','우연','이라도',
+		'한','순간','만이라도','널',
+		'볼','수','있을까?'
+
+	];
+});
+
 
 
 app.config(function($routeProvider){
@@ -136,6 +158,16 @@ app.config(function($routeProvider){
 		templateUrl:'templates/vocabulary.html'
 	});
 
+	$routeProvider.when('/lectura-a/:symbolId',{
+		controller:'LectureAController as lecturaa',
+		templateUrl:'templates/lectura-a.html'
+	});
+
+	$routeProvider.when('/lectura-b/:symbolId',{
+		controller:'LectureBController as lecturab',
+		templateUrl:'templates/lectura-b.html'
+	});
+
 	$routeProvider.otherwise({
 		redirectTo:'/'
 	});
@@ -145,36 +177,39 @@ app.config(function($routeProvider){
 
 
 app.controller('HomeController',function ($location){
-	annyang.pause();
-	this.message = 'estas mal';
-	this.mostrar = true;
 
 	this.alphabet = function() {
-		//generar un numero random
 		$location.path('/symbol/1');
 	};
 
 	this.vocabulary = function() {
-		//generar un numero random
 		$location.path('/vocabulary/1');
 	};
+
+	this.lecturaa = function() {
+		$location.path('/lectura-a/1');
+	};
+
+	this.lecturab = function() {
+		$location.path('/lectura-b/1');
+	};
+
 
 });
 
 
 app.controller('SymbolController',function($routeParams, $location, Symbols){
-	console.log(Symbols.length);
+
+	window.section="symbol";
+	window.length= Symbols.length;
 
 	this.showRandomSymbol = function() {
-		annyang.pause();
 		var nextSymbol = Math.floor((Math.random() * Symbols.length) + 1);
 		$location.path('/symbol/'+ nextSymbol);
 	};
 
 	this.showSuccessMessage = function() {
 		console.log('-------- resultMatch --------');
-		annyang.pause();
-
 		// si entro aqui, significa que dijo bien la palabra o letra.
 		// mostrar mensaje de exito.
 		swal({
@@ -196,13 +231,15 @@ app.controller('SymbolController',function($routeParams, $location, Symbols){
 	var command = {};
 	command[this.symbol] = this.showSuccessMessage;
 	annyang.addCommands(command);
-	annyang.resume();
+
 });
 
 
 
 app.controller('VocabularyController',function($routeParams, $location, Vocabulary){
-	console.log('Palabras por aprender '+Vocabulary.length);
+
+	window.section="vocabulary";
+	window.length= Vocabulary.length;
 
 	this.showRandomSymbol = function() {
 		annyang.pause();
@@ -212,7 +249,7 @@ app.controller('VocabularyController',function($routeParams, $location, Vocabula
 
 	this.showSuccessMessage = function() {
 		console.log('-------- resultMatch --------');
-		annyang.pause();
+
 
 		// si entro aqui, significa que dijo bien la palabra o letra.
 		// mostrar mensaje de exito.
@@ -235,7 +272,85 @@ app.controller('VocabularyController',function($routeParams, $location, Vocabula
 	var command = {};
 	command[this.symbol] = this.showSuccessMessage;
 	annyang.addCommands(command);
-	annyang.resume();
+
+
+});
+
+
+app.controller('LectureAController',function($routeParams, $location, LectureA){
+
+	window.section="lectura-a";
+	window.length= LectureA.length;
+
+	this.showRandomSymbol = function() {
+		var nextSymbol = Math.floor((Math.random() * LectureA.length) + 1);
+		$location.path('/lectura-a/'+ nextSymbol);
+	};
+
+	this.showSuccessMessage = function() {
+		console.log('-------- resultMatch --------');
+		// si entro aqui, significa que dijo bien la palabra o letra.
+		// mostrar mensaje de exito.
+		swal({
+			title: "Fighting!",
+			text: "",
+			type: "success",
+			confirmButtonText: "Siguiente",
+			closeOnConfirm: true
+		}, function(){
+
+			var nextSymbol = Math.floor((Math.random() * LectureA.length) + 1);
+			// redirigir al usuario a un nuevo symbol, palabra o letra.
+			window.location = "/#/lectura-a/"+nextSymbol;
+
+		});
+	};
+
+	this.symbol = LectureA[$routeParams.symbolId-1];
+	var command = {};
+	command[this.symbol] = this.showSuccessMessage;
+	annyang.addCommands(command);
+
+
+});
+
+
+app.controller('LectureBController',function($routeParams, $location, LectureB){
+
+	window.length= LectureB.length;
+	window.section="lectura-b";
+
+
+	this.showRandomSymbol = function() {
+		var nextSymbol = Math.floor((Math.random() * LectureB.length) + 1);
+		$location.path('/lectura-b/'+ nextSymbol);
+	};
+
+	this.showSuccessMessage = function() {
+		console.log('-------- resultMatch --------');
+		// si entro aqui, significa que dijo bien la palabra o letra.
+		// mostrar mensaje de exito.
+		swal({
+			title: "Fighting!",
+			text: "",
+			type: "success",
+			confirmButtonText: "Siguiente",
+			closeOnConfirm: true
+		}, function(){
+
+			var nextSymbol = Math.floor((Math.random() * LectureB.length) + 1);
+
+			// redirigir al usuario a un nuevo symbol, palabra o letra.
+			window.location = "/#/lectura-b/"+nextSymbol;
+
+		});
+	};
+
+	this.symbol = LectureB[$routeParams.symbolId-1];
+	var command = {};
+	command[this.symbol] = this.showSuccessMessage;
+	annyang.addCommands(command);
+
 
 });
 
