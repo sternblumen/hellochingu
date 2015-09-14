@@ -122,16 +122,16 @@ app.service('Vocabulary', function() {
 
 app.service('LectureA', function() {
 	return [
-		'별','생각','하기보다','기도','하기로','한다',
-		'기도','하기보다','미소','짓기로','한다',
-		'미소','짓기보다','손을','잡아주기로','한다'
+		'별','생각하기보다','기도하기로','한다',
+		'기도하기보다','미소짓기로','한다',
+		'미소짓기보다','손을','잡아주기로','한다'
 	];
 });
 
 app.service('LectureB', function() {
 	return [
 		'사랑해','사랑했지만',
-		'내가','부족','했어나봐',
+		'내가','부족했어나','봐',
 		'혹시','우연','이라도',
 		'한','순간','만이라도','널',
 		'볼','수','있을까?'
@@ -168,6 +168,11 @@ app.config(function($routeProvider){
 		templateUrl:'templates/lectura-b.html'
 	});
 
+	$routeProvider.when('/pronombres',{
+		controller:'Pronombres as pronombres',
+		templateUrl:'templates/pronombres.html'
+	});
+
 	$routeProvider.otherwise({
 		redirectTo:'/'
 	});
@@ -192,6 +197,10 @@ app.controller('HomeController',function ($location){
 
 	this.lecturab = function() {
 		$location.path('/lectura-b/1');
+	};
+
+	this.pronombres = function() {
+		$location.path('/pronombres');
 	};
 
 
