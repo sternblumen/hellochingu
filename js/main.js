@@ -287,7 +287,7 @@ app.controller('VocabularyController',function($routeParams, $location, Vocabula
 
 
 app.controller('LectureAController',function($routeParams, $location, LectureA){
-
+	annyang.abort();
 	window.section="lectura-a";
 	window.length= LectureA.length;
 
@@ -325,7 +325,7 @@ app.controller('LectureAController',function($routeParams, $location, LectureA){
 
 
 app.controller('LectureBController',function($routeParams, $location, LectureB){
-
+	annyang.abort();
 	window.length= LectureB.length;
 	window.section="lectura-b";
 
